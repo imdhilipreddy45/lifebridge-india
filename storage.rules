@@ -1,0 +1,69 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserRole() {
+      return request.auth.token.role;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'ADMIN';
+    }
+
+    function isDoctor() {
+      return isAuthenticated() && getUserRole() == 'DOCTOR';
+    }
+
+    function isHospital() {
+      return isAuthenticated() && getUserRole() == 'HOSPITAL';
+    }
+
+    function isPatientFamily() {
+      return isAuthenticated() && getUserRole() == 'PATIENT_FAMILY';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. MEDICAL REPORTS & GENETIC REPORTS: NEVER PUBLIC!
+    // Accessible ONLY to authenticated Patient Family, Treating Doctor, Hospital Partner, and Platform Admin.
+    match /medical_reports/{patientId}/{allPaths=**} {
+      allow read: if isPatientFamily() || isDoctor() || isHospital() || isAdmin();
+      allow write: if isPatientFamily() || isDoctor() || isHospital() || isAdmin();
+    }
+
+    match /genetic_reports/{patientId}/{allPaths=**} {
+      allow read: if isPatientFamily() || isDoctor() || isHospital() || isAdmin();
+      allow write: if isPatientFamily() || isDoctor() || isHospital() || isAdmin();
+    }
+
+    // 2. IDENTITY DOCUMENTS: Accessible ONLY to the Document Owner & Platform Admin
+    match /identity_documents/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    // 3. HOSPITAL ESTIMATES & PROFORMA INVOICES
+    match /hospital_estimates/{patientId}/{allPaths=**} {
+      allow read: if isPatientFamily() || isHospital() || isAdmin();
+      allow write: if isHospital() || isAdmin();
+    }
+
+    // 4. PUBLIC ASSETS & CAMPAIGN IMAGES: Public read, authenticated upload
+    match /public_assets/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Default deny for all unspecified paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

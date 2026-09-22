@@ -1,0 +1,154 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for Role-Based Access Control (RBAC)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserRole() {
+      return request.auth.token.role;
+    }
+
+    function hasRole(role) {
+      return isAuthenticated() && getUserRole() == role;
+    }
+
+    function isAdmin() {
+      return hasRole('ADMIN');
+    }
+
+    function isDoctor() {
+      return hasRole('DOCTOR');
+    }
+
+    function isHospital() {
+      return hasRole('HOSPITAL');
+    }
+
+    function isCSR() {
+      return hasRole('CSR');
+    }
+
+    function isPatientFamily() {
+      return hasRole('PATIENT_FAMILY');
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. USERS COLLECTION: Self read/update, Admin full access. Prevent role self-elevation.
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated();
+      allow update: if (isOwner(userId) && request.resource.data.role == resource.data.role) || isAdmin();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // 2. PATIENTS & CAMPAIGNS COLLECTIONS: Public read (demo/approved), Patient Family / Doctor / Admin write
+    match /patients/{patientId} {
+      allow read: if true;
+      allow create: if isPatientFamily() || isAdmin();
+      allow update: if (isPatientFamily() || isDoctor() || isHospital() || isAdmin()) && (!('raisedAmount' in request.resource.data) || request.resource.data.raisedAmount == resource.data.raisedAmount || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /campaigns/{campaignId} {
+      allow read: if true;
+      allow create: if isPatientFamily() || isAdmin();
+      allow update: if (isPatientFamily() || isAdmin()) && (!('raisedAmount' in request.resource.data) || request.resource.data.raisedAmount == resource.data.raisedAmount || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // 3. VERIFICATION & HOPE JOURNEY: Public read checklist status, Doctor / Hospital / Admin write
+    match /verification/{verificationId} {
+      allow read: if true;
+      allow create, update: if isDoctor() || isHospital() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /hopeJourney/{journeyId} {
+      allow read: if true;
+      allow create, update: if isPatientFamily() || isDoctor() || isHospital() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 4. HOSPITALS & DOCTORS DIRECTORY: Public read, Doctor / Hospital / Admin update
+    match /hospitals/{hospitalId} {
+      allow read: if true;
+      allow create, update: if isHospital() || isAdmin();
+    }
+
+    match /doctors/{doctorId} {
+      allow read: if true;
+      allow create, update: if isDoctor() || isAdmin();
+    }
+
+    // 5. BLOOD DONORS & REQUESTS: Public read requests, Donor self-manage
+    match /bloodDonors/{donorId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+
+    match /bloodRequests/{requestId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if isHospital() || isAdmin();
+    }
+
+    // 6. VOLUNTEERS & DONATIONS: Audit trail & Demo mode tracking
+    match /volunteers/{volunteerId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+
+    match /donations/{donationId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+    }
+
+    match /transparency/{ledgerId} {
+      allow read: if true;
+      allow create, update: if isAdmin();
+    }
+
+    // 7. AUDIT LOGS COLLECTION: Immutable records created on important administrative/verification actions
+    match /auditLogs/{logId} {
+      allow read: if isAdmin() || isDoctor() || isHospital();
+      allow create: if isAuthenticated(); // Written by Cloud Functions / Authenticated Verification triggers
+      allow update, delete: if false; // Audit logs are immutable and cannot be deleted or modified
+    }
+
+    // 8. RESEARCH & NOTIFICATIONS
+    match /research/{paperId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isOwner(resource.data.recipientUid);
+      allow create: if isAuthenticated();
+      allow update: if isOwner(resource.data.recipientUid);
+    }
+
+    // 9. PILOT OPERATIONS CENTER COLLECTIONS (V1.1)
+    match /pilotParticipants/{participantId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /pilotFeedback/{feedbackId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    match /pilotIssues/{issueId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

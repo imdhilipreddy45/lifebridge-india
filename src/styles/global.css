@@ -1,0 +1,321 @@
+@import './tokens.css';
+
+/* Global Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-navy-900);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: var(--font-size-h1-desktop);
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--font-size-h1-mobile);
+  }
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+}
+
+a {
+  color: var(--color-brand-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-brand-blue-hover);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Accessibility Focus Ring */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-blue);
+  outline-offset: 2px;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Responsive Visibility Helpers (Breakpoints at 1000px) */
+@media (min-width: 1000px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 999px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Card Component */
+.card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+}
+
+/* Button Components & High-Contrast System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Ensure SVG icons inside buttons inherit contrast color */
+.btn svg, button svg {
+  color: inherit;
+  stroke: currentColor;
+}
+
+/* 1. PRIMARY BLUE BUTTONS */
+.btn-primary, button[type="submit"].btn-primary, .hero-btn-primary {
+  background-color: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-brand-blue) !important;
+}
+
+.btn-primary:hover, button[type="submit"].btn-primary:hover, .hero-btn-primary:hover {
+  background-color: var(--color-brand-blue-hover) !important;
+  color: #ffffff !important;
+  border-color: var(--color-brand-blue-hover) !important;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3) !important;
+}
+
+/* 2. RED EMERGENCY BUTTONS */
+.btn-emergency, .btn-danger {
+  background-color: var(--color-emergency-red) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-emergency-red) !important;
+}
+
+.btn-emergency:hover, .btn-danger:hover {
+  background-color: #b91c1c !important;
+  color: #ffffff !important;
+  border-color: #b91c1c !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+}
+
+/* 3. SECONDARY & OUTLINE BUTTONS */
+.btn-secondary, .btn-outline, .hero-btn-secondary {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.btn-secondary:hover, .btn-outline:hover, .hero-btn-secondary:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+/* 4. EMERALD / SUCCESS BUTTONS */
+.btn-emerald {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border: 1px solid #059669 !important;
+}
+
+.btn-emerald:hover {
+  background-color: #047857 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+/* 5. SMALL BUTTON UTILITY */
+.btn-sm {
+  padding: 0.35rem 0.75rem !important;
+  font-size: 0.8125rem !important;
+  border-radius: 6px !important;
+}
+
+/* HERO CTA BUTTON SPECIFIC HOVER & FOCUS STYLES */
+.hero-btn-primary:hover {
+  background-color: #1e40af !important;
+  box-shadow: 0 6px 12px -2px rgba(29, 78, 216, 0.35) !important;
+}
+
+.hero-btn-primary:focus-visible {
+  outline: 2px solid #1d4ed8 !important;
+  outline-offset: 3px !important;
+}
+
+.hero-btn-secondary:hover {
+  background-color: #f8fafc !important;
+  border-color: #94a3b8 !important;
+}
+
+.hero-btn-secondary:focus-visible {
+  outline: 2px solid #64748b !important;
+  outline-offset: 3px !important;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badge-blue {
+  background-color: var(--color-brand-blue-light);
+  color: var(--color-brand-blue-hover);
+}
+
+.badge-emerald {
+  background-color: var(--color-emerald-light);
+  color: var(--color-emerald-600);
+}
+
+.badge-red {
+  background-color: var(--color-emergency-light);
+  color: var(--color-emergency-red);
+}
+
+.badge-neutral {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-navy-600);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-8);
+  box-shadow: var(--shadow-modal);
+  position: relative;
+  border: 1px solid var(--color-border);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Grid & Layout Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
