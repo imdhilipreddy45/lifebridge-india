@@ -36,7 +36,7 @@ export const TransparencySection: React.FC = () => {
             Public Transparency Ledger
           </h2>
           <p style={{ color: '#64748b' }}>
-            Real-time, audited record of verified campaign transactions and zero-fee settlements.
+            Public record of verified campaign financial activity, published when confirmed transactions are available.
           </p>
         </div>
 
@@ -48,8 +48,8 @@ export const TransparencySection: React.FC = () => {
           <div className="card" style={{ maxWidth: '600px', margin: '0 auto', padding: '3.5rem 2rem', textAlign: 'center' }}>
             <FileText size={40} color="#64748b" style={{ marginBottom: '1rem' }} />
             <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#0f172a' }}>No Financial Records Available Yet</h3>
-            <p style={{ color: '#64748b', maxWidth: '440px', margin: '0 auto', fontSize: '0.9rem' }}>
-              No financial records are available yet. Confirmed campaign transactions will automatically publish to this public ledger.
+            <p style={{ color: '#64748b', maxWidth: '440px', margin: '0 auto', fontSize: '0.9rem', lineHeight: 1.5 }}>
+              No financial activity records have been logged yet. Confirmed campaign transactions will automatically publish to this public ledger when processed.
             </p>
           </div>
         ) : (

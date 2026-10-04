@@ -6,12 +6,14 @@ interface PatientCampaignsGridProps {
   campaigns: PatientCampaign[];
   onSelectCampaign: (campaign: PatientCampaign) => void;
   onDonateCampaign: (campaign: PatientCampaign) => void;
+  onApplySupport?: () => void;
 }
 
 export const PatientCampaignsGrid: React.FC<PatientCampaignsGridProps> = ({
   campaigns,
   onSelectCampaign,
-  onDonateCampaign
+  onDonateCampaign,
+  onApplySupport
 }) => {
   const [activeTrustDrawer, setActiveTrustDrawer] = useState<PatientCampaign | null>(null);
 
@@ -22,9 +24,9 @@ export const PatientCampaignsGrid: React.FC<PatientCampaignsGridProps> = ({
   };
 
   return (
-    <section style={{ padding: '5rem 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+    <section style={{ padding: '3rem 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
       <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 3.5rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 2.5rem' }}>
           <span style={{ fontSize: '0.85rem', color: '#1d4ed8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Verified Support Needs
           </span>
@@ -32,17 +34,24 @@ export const PatientCampaignsGrid: React.FC<PatientCampaignsGridProps> = ({
             Verified Patient Campaigns
           </h2>
           <p style={{ color: '#64748b' }}>
-            Every campaign has completed independent document reviews by attending doctors and partner hospital desks.
+            Every campaign has completed independent document reviews by attending doctors and hospital verification desks.
           </p>
         </div>
 
         {campaigns.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3.5rem 1.5rem', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e2e8f0', maxWidth: '540px', margin: '0 auto' }}>
-            <ShieldCheck size={40} color="#64748b" style={{ marginBottom: '0.75rem' }} />
-            <h3 style={{ fontSize: '1.15rem', color: '#0f172a', marginBottom: '0.35rem' }}>No Active Campaigns Available</h3>
-            <p style={{ color: '#64748b', fontSize: '0.875rem', margin: 0 }}>
-              No verified support campaigns are currently available.
+          <div style={{ textAlign: 'center', padding: '2.5rem 1.5rem', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', maxWidth: '520px', margin: '0 auto', boxShadow: 'var(--shadow-subtle)' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#eff6ff', color: '#1d4ed8', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+              <ShieldCheck size={26} />
+            </div>
+            <h3 style={{ fontSize: '1.25rem', color: '#0f172a', marginBottom: '0.5rem', fontWeight: 700 }}>No Active Campaigns Available</h3>
+            <p style={{ color: '#64748b', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.55 }}>
+              All patient support campaigns undergo strict hospital desk verification before going live. If you or a family member requires medical support, submit an application.
             </p>
+            {onApplySupport && (
+              <button className="btn btn-primary" style={{ justifyContent: 'center' }} onClick={onApplySupport}>
+                Apply for Patient Support
+              </button>
+            )}
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>

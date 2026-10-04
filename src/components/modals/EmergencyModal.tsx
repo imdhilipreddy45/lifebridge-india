@@ -41,7 +41,20 @@ export const EmergencyModal: React.FC<EmergencyModalProps> = ({ isOpen, onClose 
           </button>
         </div>
 
-        <button className="btn btn-outline" style={{ width: '100%' }} onClick={onClose}>
+        <button 
+          className="btn btn-outline" 
+          style={{ 
+            width: '100%', 
+            justifyContent: 'center', 
+            height: '44px', 
+            fontWeight: 600, 
+            fontSize: '0.9375rem', 
+            borderColor: '#cbd5e1', 
+            color: '#334155',
+            backgroundColor: '#ffffff'
+          }} 
+          onClick={onClose}
+        >
           Close Emergency Panel
         </button>
       </div>

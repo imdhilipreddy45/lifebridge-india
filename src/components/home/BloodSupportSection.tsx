@@ -27,10 +27,10 @@ export const BloodSupportSection: React.FC = () => {
           alignItems: 'center'
         }}>
           <div>
-            <span style={{ fontSize: '0.85rem', color: '#dc2626', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Emergency Network
-            </span>
-            <h2 style={{ fontSize: '2.25rem', marginTop: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontSize: '0.8125rem', fontWeight: 700, marginBottom: '0.75rem' }}>
+              <ShieldAlert size={15} color="#dc2626" /> Emergency Voluntary Network
+            </div>
+            <h2 style={{ fontSize: '2.25rem', marginTop: '0.25rem', marginBottom: '1rem', color: '#0f172a' }}>
               Voluntary Blood Donor Matching
             </h2>
             <p style={{ color: '#475569', marginBottom: '1.5rem', lineHeight: 1.6 }}>

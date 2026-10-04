@@ -20,17 +20,18 @@ export const PilotBanner: React.FC = () => {
         }}
       >
         <span style={{ 
-          background: '#059669', 
+          background: '#1d4ed8', 
           color: '#ffffff', 
-          padding: '0.1rem 0.5rem', 
+          padding: '0.15rem 0.55rem', 
           borderRadius: '4px', 
           fontWeight: 700, 
-          fontSize: '0.7rem' 
+          fontSize: '0.7rem',
+          letterSpacing: '0.03em'
         }}>
-          Live Platform
+          LifeBridge India
         </span>
         <span style={{ color: '#cbd5e1' }}>
-          LifeBridge India — Transparent Medical Support & Rare Disease Care Platform.
+          Transparent Medical Support & Rare Disease Care Platform.
         </span>
         <button
           onClick={() => setShowDetails(true)}
@@ -46,7 +47,7 @@ export const PilotBanner: React.FC = () => {
             fontSize: '0.8125rem'
           }}
         >
-          Platform Integrity
+          Verification & Trust Policy
         </button>
       </div>
 

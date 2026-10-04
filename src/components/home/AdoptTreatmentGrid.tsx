@@ -99,11 +99,11 @@ export const AdoptTreatmentGrid: React.FC<AdoptTreatmentGridProps> = ({ onAdoptN
                 </div>
 
                 <button
-                  className="btn btn-outline"
-                  style={{ width: '100%', justifyContent: 'center', backgroundColor: '#f1f5f9', color: '#0f172a', borderColor: '#cbd5e1' }}
+                  className="btn btn-emerald"
+                  style={{ width: '100%', justifyContent: 'center', height: '44px', fontWeight: 700 }}
                   onClick={() => onAdoptNeed(n.title, n.amount)}
                 >
-                  Support Itemized Need
+                  Support This Need →
                 </button>
               </div>
             );

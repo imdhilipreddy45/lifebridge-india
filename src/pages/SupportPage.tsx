@@ -10,7 +10,7 @@ export const SupportPage: React.FC = () => {
 
   const faqs = [
     { q: 'What is Spinal Muscular Atrophy (SMA)?', a: 'SMA is a rare genetic neuromuscular disease affecting motor neurons, leading to muscle weakness. Early gene therapy or targeted protein therapy is critical.' },
-    { q: 'How does Hope Verification work?', a: 'Every patient campaign undergoes independent human document audits by attending doctors and hospital partner desks to verify identity, medical records, and treatment estimates.' },
+    { q: 'How does Hope Verification work?', a: 'Every patient campaign undergoes independent human document audits by attending doctors and hospital verification desks to verify identity, medical records, and treatment estimates.' },
     { q: 'Is my donation tax-deductible in this pilot?', a: 'All contributions in this pilot are simulated demo transactions. Entity tax filing (80G / 12A) will activate in Phase V2 after formal registration.' },
     { q: 'How does voluntary blood matching work?', a: 'Families submit blood component requests (O-negative, platelets, plasma) which are matched against standby registered donors without exposing private contact info.' }
   ];

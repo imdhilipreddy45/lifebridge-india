@@ -28,7 +28,7 @@ The application addresses critical gaps in medical crowdfunding through a **5-st
 | Subsystem / Feature | Production Status | Environment / Enforcement |
 | :--- | :---: | :--- |
 | **React 18 Single-Page Web Client** | 🟢 **Live Deployed** | Deployed on Firebase Hosting CDN ([https://lifebridge-india.web.app](https://lifebridge-india.web.app)) |
-| **Firebase Authentication** | 🟢 **Live Deployed** | Active (Email/Password & Google OAuth session persistence) |
+| **Firebase Authentication** | 🟢 **Live Deployed** | Active (Email/Password session persistence) |
 | **Cloud Firestore Database** | 🟢 **Live Deployed** | Active with strict server-side `firestore.rules` |
 | **Cloud Storage (Medical Bucket)** | 🟢 **Live Deployed** | Active under path `/medical_reports/{patientId}/*` with `storage.rules` |
 | **7-Role Access Control (RBAC)** | 🟢 **Live Deployed** | Enforced client-side and validated backend-side |
