@@ -14,6 +14,7 @@ import { SupportPage } from './pages/SupportPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { EmergencyModal } from './components/modals/EmergencyModal';
 import { AuthModal } from './components/modals/AuthModal';
+import { FeedbackModal } from './components/modals/FeedbackModal';
 
 export const App: React.FC = () => {
   const getTabFromHash = () => {
@@ -26,6 +27,7 @@ export const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>(getTabFromHash);
   const [emergencyOpen, setEmergencyOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
 
   // Synchronize hash changes and Browser Back/Forward buttons
@@ -60,7 +62,7 @@ export const App: React.FC = () => {
   const renderView = () => {
     switch (currentTab) {
       case 'dashboard':
-        return <DashboardPage />;
+        return <DashboardPage onNavigate={handleNavigate} onOpenAuth={handleOpenAuth} />;
       case 'rare-diseases':
         return <RareDiseasesPage onNavigate={handleNavigate} />;
       case 'patients':
@@ -88,7 +90,7 @@ export const App: React.FC = () => {
         <PilotBanner />
 
         {/* GLOBAL NAVIGATION HEADER */}
-        <Header 
+        <Header
           currentTab={currentTab}
           onNavigate={handleNavigate}
           onOpenEmergency={() => setEmergencyOpen(true)}
@@ -101,20 +103,30 @@ export const App: React.FC = () => {
         </div>
 
         {/* FOOTER */}
-        <Footer onNavigate={handleNavigate} />
+        <Footer
+          onNavigate={handleNavigate}
+          onOpenFeedback={() => setFeedbackOpen(true)}
+        />
 
         {/* EMERGENCY ASSISTANCE MODAL */}
-        <EmergencyModal 
+        <EmergencyModal
           isOpen={emergencyOpen}
           onClose={() => setEmergencyOpen(false)}
         />
 
         {/* AUTHENTICATION MODAL (SIGN IN & REGISTER) */}
-        <AuthModal 
+        <AuthModal
           isOpen={authModalOpen}
           initialMode={authMode}
           onClose={() => setAuthModalOpen(false)}
           onSuccess={() => handleNavigate('dashboard')}
+        />
+
+        {/* PILOT FEEDBACK MODAL */}
+        <FeedbackModal
+          isOpen={feedbackOpen}
+          onClose={() => setFeedbackOpen(false)}
+          currentPage={currentTab}
         />
       </div>
     </AuthProvider>

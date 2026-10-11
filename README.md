@@ -178,6 +178,20 @@ npx firebase-tools deploy --only hosting -P lifebridge-india
 
 ---
 
+## 🏷️ Release History
+
+* **V1.1.2-RELEASE (Current Target)**:
+  * **Spark-Compatible Shared Persistence**: Authenticated patient applications persist directly to Cloud Firestore private collection `/patientApplications/{applicationId}` using declarative document-based RBAC (`users/{uid}`) without requiring Cloud Functions or Blaze billing.
+  * **Strict Data Privacy**: Dedicated separation between private patient applications and public campaigns `/patients/`.
+  * **Audit & Testing**: 35/35 Security-Rule Unit Tests and 16/16 E2E Persistence Tests verified in Cloud Firestore Emulator.
+  * **Honest Disclosures**: Zero-transfer simulated donations, Spark plan active, unauthenticated local drafts distinctly labelled.
+* **V1.1.1-RELEASE**:
+  * Functional integrity audit, deep-route client preservation, and Phase 3 security/governance specification models.
+* **V1.1.0-RELEASE**:
+  * Initial pilot release with 7-role RBAC framework, 5-stage hope verification, and rare disease directories.
+
+---
+
 ## 📄 License
 
 Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.

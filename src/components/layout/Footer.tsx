@@ -3,9 +3,10 @@ import { HeartHandshake, ShieldCheck } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
+  onOpenFeedback?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenFeedback }) => {
   return (
     <footer style={{
       backgroundColor: '#0f172a',
@@ -88,9 +89,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li><a href="#support" onClick={(e) => { e.preventDefault(); onNavigate('support'); }} style={{ color: '#94a3b8' }}>Help & Knowledge Base</a></li>
               <li><a href="#privacy" onClick={(e) => { e.preventDefault(); onNavigate('support'); }} style={{ color: '#94a3b8' }}>Patient Privacy & Consent</a></li>
               <li><a href="#disclaimer" onClick={(e) => { e.preventDefault(); onNavigate('support'); }} style={{ color: '#94a3b8' }}>Medical Safety Disclaimer</a></li>
+              {onOpenFeedback && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={onOpenFeedback}
+                    style={{ background: 'none', border: 'none', padding: 0, color: '#38bdf8', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 600 }}
+                  >
+                    Give Pilot Feedback →
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
+
 
         {/* BOTTOM COPYRIGHT */}
         <div style={{

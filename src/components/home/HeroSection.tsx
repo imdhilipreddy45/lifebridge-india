@@ -64,15 +64,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onFindSupport, onHowIt
             </p>
 
             {/* ACTION BUTTONS: PROPER HERO CTA BUTTON STYLING */}
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem', 
-              flexWrap: 'wrap', 
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              flexWrap: 'wrap',
               alignItems: 'center',
-              marginBottom: '2.5rem' 
+              marginBottom: '2.5rem'
             }}>
               {/* PRIMARY HERO CTA BUTTON */}
-              <button 
+              <button
                 type="button"
                 onClick={onFindSupport}
                 className="hero-btn-primary"
@@ -100,7 +100,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onFindSupport, onHowIt
               </button>
 
               {/* SECONDARY HERO CTA BUTTON */}
-              <button 
+              <button
                 type="button"
                 onClick={onHowItWorks}
                 className="hero-btn-secondary"

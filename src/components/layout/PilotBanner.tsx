@@ -6,7 +6,7 @@ export const PilotBanner: React.FC = () => {
 
   return (
     <>
-      <div 
+      <div
         style={{
           backgroundColor: '#0f172a',
           color: '#f8fafc',
@@ -19,12 +19,12 @@ export const PilotBanner: React.FC = () => {
           borderBottom: '1px solid #1e293b'
         }}
       >
-        <span style={{ 
-          background: '#1d4ed8', 
-          color: '#ffffff', 
-          padding: '0.15rem 0.55rem', 
-          borderRadius: '4px', 
-          fontWeight: 700, 
+        <span style={{
+          background: '#1d4ed8',
+          color: '#ffffff',
+          padding: '0.15rem 0.55rem',
+          borderRadius: '4px',
+          fontWeight: 700,
           fontSize: '0.7rem',
           letterSpacing: '0.03em'
         }}>
@@ -59,7 +59,7 @@ export const PilotBanner: React.FC = () => {
                 <ShieldCheck color="#059669" size={22} />
                 <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Platform Trust & Transparency</h3>
               </div>
-              <button 
+              <button
                 onClick={() => setShowDetails(false)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }}
               >
@@ -76,8 +76,8 @@ export const PilotBanner: React.FC = () => {
                 <li>Voluntary blood donor contact details are never publicly exposed.</li>
               </ul>
             </div>
-            <button 
-              className="btn btn-primary" 
+            <button
+              className="btn btn-primary"
               style={{ width: '100%', marginTop: '1.25rem' }}
               onClick={() => setShowDetails(false)}
             >

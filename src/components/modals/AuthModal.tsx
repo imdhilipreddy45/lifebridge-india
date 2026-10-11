@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Lock, 
-  Mail, 
-  Eye, 
-  EyeOff, 
-  ShieldCheck, 
-  Activity, 
-  CheckCircle, 
-  AlertCircle, 
-  Heart, 
-  ArrowLeft, 
-  UserCheck, 
-  HeartHandshake, 
-  Users 
+import {
+  X,
+  Lock,
+  Mail,
+  Eye,
+  EyeOff,
+  ShieldCheck,
+  Activity,
+  CheckCircle,
+  AlertCircle,
+  Heart,
+  ArrowLeft,
+  UserCheck,
+  HeartHandshake,
+  Users
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { firebaseLoginUser, firebaseRegisterUser, firebaseSendPasswordReset } from '../../services/api';
@@ -150,15 +150,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div 
-      className="auth-overlay" 
-      onClick={onClose} 
-      role="dialog" 
+    <div
+      className="auth-overlay"
+      onClick={onClose}
+      role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
     >
       <div className="auth-container" onClick={e => e.stopPropagation()}>
-        
+
         {/* LEFT PANEL — BRANDING & TRUST POINTS (DESKTOP) */}
         <div className="auth-brand-panel">
           <div>
@@ -220,8 +220,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
         {/* RIGHT PANEL — CLEAN AUTHENTICATION CARD */}
         <div className="auth-card-panel">
-          <button 
-            className="auth-close-btn" 
+          <button
+            className="auth-close-btn"
             onClick={onClose}
             aria-label="Close authentication window"
           >
@@ -242,21 +242,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {/* DYNAMIC CARD HEADER */}
             <div className="auth-header">
               <h3 className="auth-title" id="auth-modal-title">
-                {resetSent 
-                  ? 'Check Your Inbox' 
-                  : mode === 'signin' 
-                  ? 'Welcome back' 
-                  : mode === 'register' 
-                  ? 'Create your account' 
+                {resetSent
+                  ? 'Check Your Inbox'
+                  : mode === 'signin'
+                  ? 'Welcome back'
+                  : mode === 'register'
+                  ? 'Create your account'
                   : 'Reset your password'}
               </h3>
               <p className="auth-subtitle">
-                {resetSent 
-                  ? 'A reset link has been dispatched if an account exists for this email.' 
-                  : mode === 'signin' 
-                  ? 'Sign in to continue your LifeBridge India journey.' 
-                  : mode === 'register' 
-                  ? 'Join LifeBridge India to access medical support and donor networks.' 
+                {resetSent
+                  ? 'A reset link has been dispatched if an account exists for this email.'
+                  : mode === 'signin'
+                  ? 'Sign in to continue your LifeBridge India journey.'
+                  : mode === 'register'
+                  ? 'Join LifeBridge India to access medical support and donor networks.'
                   : 'Enter your account email to receive password reset instructions.'}
               </p>
             </div>
@@ -271,8 +271,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <p style={{ fontSize: '0.875rem', color: '#475569', marginBottom: '1.5rem', lineHeight: 1.5 }}>
                   If an account exists for <strong style={{ color: '#0f172a' }}>{email}</strong>, you will receive password reset instructions shortly.
                 </p>
-                <button 
-                  className="btn btn-primary" 
+                <button
+                  className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center' }}
                   onClick={() => { setResetSent(false); setMode('signin'); }}
                 >
@@ -306,10 +306,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   </div>
                 )}
 
-                <button 
-                  type="submit" 
-                  className="btn btn-primary" 
-                  disabled={loading} 
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={loading}
                   style={{ width: '100%', justifyContent: 'center', height: '46px', marginTop: '0.5rem' }}
                 >
                   {loading ? 'Sending link...' : 'Send Password Reset Link'}
@@ -318,7 +318,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             ) : (
               /* SIGN IN / REGISTER FORM */
               <form onSubmit={mode === 'signin' ? handleSignIn : handleRegister}>
-                
+
                 {/* EMAIL FIELD */}
                 <div className="auth-form-group">
                   <label className="auth-label" htmlFor="auth-email">Email Address</label>
@@ -445,14 +445,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 )}
 
                 {/* SUBMIT BUTTON */}
-                <button 
-                  type="submit" 
-                  className="btn btn-primary" 
-                  disabled={loading} 
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={loading}
                   style={{ width: '100%', justifyContent: 'center', height: '46px', marginTop: '0.5rem' }}
                 >
-                  {loading 
-                    ? (mode === 'signin' ? 'Signing in...' : 'Creating Account...') 
+                  {loading
+                    ? (mode === 'signin' ? 'Signing in...' : 'Creating Account...')
                     : (mode === 'signin' ? 'Sign In' : 'Create Account')}
                 </button>
               </form>
@@ -465,7 +465,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {mode === 'signin' ? (
                 <>
                   Don't have an account?{' '}
-                  <button 
+                  <button
                     type="button"
                     className="auth-switch-btn"
                     onClick={() => { setMode('register'); setError(null); }}
@@ -476,7 +476,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               ) : mode === 'register' ? (
                 <>
                   Already have an account?{' '}
-                  <button 
+                  <button
                     type="button"
                     className="auth-switch-btn"
                     onClick={() => { setMode('signin'); setError(null); }}
@@ -487,7 +487,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               ) : (
                 <>
                   Remembered your password?{' '}
-                  <button 
+                  <button
                     type="button"
                     className="auth-switch-btn"
                     onClick={() => { setMode('signin'); setError(null); }}

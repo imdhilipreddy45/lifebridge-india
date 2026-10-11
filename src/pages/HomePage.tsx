@@ -19,6 +19,7 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const [campaigns, setCampaigns] = useState<PatientCampaign[]>([]);
   const [selectedDonationCampaign, setSelectedDonationCampaign] = useState<PatientCampaign | null>(null);
+  const [selectedNeedItem, setSelectedNeedItem] = useState<{ title: string; amount: number } | null>(null);
   const [applyModalOpen, setApplyModalOpen] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <main>
       {/* 1. HERO SECTION */}
-      <HeroSection 
+      <HeroSection
         onFindSupport={() => onNavigate('patients')}
         onHowItWorks={() => onNavigate('how-it-works')}
       />
@@ -40,14 +41,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       <RareDiseasesGrid onSelectCategory={() => onNavigate('rare-diseases')} />
 
       {/* 4. VERIFIED PATIENT CAMPAIGNS */}
-      <PatientCampaignsGrid 
+      <PatientCampaignsGrid
         campaigns={campaigns}
         onSelectCampaign={() => onNavigate('patients')}
         onDonateCampaign={(c) => setSelectedDonationCampaign(c)}
+        onApplySupport={() => setApplyModalOpen(true)}
       />
 
       {/* 5. ADOPT A TREATMENT */}
-      <AdoptTreatmentGrid onAdoptNeed={() => setSelectedDonationCampaign(campaigns[0] || null)} />
+      <AdoptTreatmentGrid
+        onAdoptNeed={(title, amount) => {
+          setSelectedNeedItem({ title, amount });
+        }}
+      />
 
       {/* 6. BLOOD SUPPORT */}
       <BloodSupportSection />
@@ -59,16 +65,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       <LifeBridgeAI />
 
       {/* DEMO DONATION MODAL */}
-      <DemoDonationModal 
+      <DemoDonationModal
         campaign={selectedDonationCampaign}
-        isOpen={!!selectedDonationCampaign}
-        onClose={() => setSelectedDonationCampaign(null)}
+        needItem={selectedNeedItem}
+        isOpen={!!selectedDonationCampaign || !!selectedNeedItem}
+        onClose={() => {
+          setSelectedDonationCampaign(null);
+          setSelectedNeedItem(null);
+        }}
       />
 
       {/* PATIENT APPLICATION MODAL */}
-      <PatientApplyModal 
+      <PatientApplyModal
         isOpen={applyModalOpen}
         onClose={() => setApplyModalOpen(false)}
+        onNavigateToDashboard={() => onNavigate('dashboard')}
       />
     </main>
   );

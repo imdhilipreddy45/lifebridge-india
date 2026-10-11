@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bot, Send, X, ShieldAlert } from 'lucide-react';
 
 export const LifeBridgeAI: React.FC = () => {
@@ -11,6 +11,16 @@ export const LifeBridgeAI: React.FC = () => {
       disclaimer: 'LifeBridge AI provides general educational information only and cannot diagnose, prescribe treatment, or replace a qualified healthcare professional.'
     }
   ]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();

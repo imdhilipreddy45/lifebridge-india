@@ -1,6 +1,6 @@
 // LifeBridge India - Strict TypeScript Data Models & Types
 
-export type UserRole = 
+export type UserRole =
   | 'DONOR'
   | 'PATIENT_FAMILY'
   | 'VOLUNTEER'
@@ -19,7 +19,7 @@ export interface UserProfile {
   consentGiven: boolean;
 }
 
-export type ApplicationStatus = 
+export type ApplicationStatus =
   | 'DRAFT'
   | 'SUBMITTED'
   | 'UNDER_REVIEW'

@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Heart, 
-  Menu, 
-  X, 
-  ChevronDown, 
-  AlertTriangle, 
-  Droplet, 
-  FileText, 
-  HelpCircle, 
-  LayoutDashboard, 
-  LogIn, 
-  UserPlus, 
-  LogOut 
+import {
+  Heart,
+  Menu,
+  X,
+  ChevronDown,
+  AlertTriangle,
+  Droplet,
+  FileText,
+  HelpCircle,
+  LayoutDashboard,
+  LogIn,
+  UserPlus,
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { UserRole } from '../../types';
@@ -34,15 +34,25 @@ export const Header: React.FC<HeaderProps> = ({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close "More" dropdown when clicking outside
+  // Close "More" dropdown when clicking outside or pressing Escape
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setDropdownOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const getDashboardLabel = (role: UserRole) => {
@@ -65,10 +75,10 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 100, backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
-        
+
         {/* BRAND LOGO (NEVER WRAPS) */}
-        <div 
-          onClick={() => onNavigate('home')} 
+        <div
+          onClick={() => onNavigate('home')}
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', flexShrink: 0 }}
         >
           <div style={{ backgroundColor: '#1d4ed8', color: '#ffffff', padding: '0.4rem', borderRadius: '8px', display: 'flex' }}>
@@ -86,35 +96,35 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* CENTER DESKTOP NAVIGATION (VISIBLE AT >= 1000px) */}
         <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <button 
+          <button
             onClick={() => onNavigate('home')}
             style={navButtonStyle(currentTab === 'home')}
           >
             Home
           </button>
 
-          <button 
+          <button
             onClick={() => onNavigate('rare-diseases')}
             style={navButtonStyle(currentTab === 'rare-diseases')}
           >
             Rare Diseases
           </button>
 
-          <button 
+          <button
             onClick={() => onNavigate('patients')}
             style={navButtonStyle(currentTab === 'patients')}
           >
             Patients
           </button>
 
-          <button 
+          <button
             onClick={() => onNavigate('how-it-works')}
             style={navButtonStyle(currentTab === 'how-it-works')}
           >
             How It Works
           </button>
 
-          <button 
+          <button
             onClick={() => onNavigate('adopt-treatment')}
             style={navButtonStyle(currentTab === 'adopt-treatment' || currentTab === 'micro-support')}
           >
@@ -123,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* MORE DROPDOWN */}
           <div ref={dropdownRef} style={{ position: 'relative' }}>
-            <button 
+            <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               style={{ ...navButtonStyle(false), display: 'flex', alignItems: 'center', gap: '0.2rem' }}
             >
@@ -160,12 +170,12 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* RIGHT ACTION CONTROLS (DESKTOP) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexShrink: 0 }}>
-          
+
           {/* URGENT HELP EMERGENCY BUTTON */}
-          <button 
+          <button
             onClick={onOpenEmergency}
             className="btn btn-emergency"
-            style={{ 
+            style={{
               padding: '0.4rem 0.75rem',
               fontSize: '0.8125rem',
               fontWeight: 700,
@@ -228,7 +238,7 @@ export const Header: React.FC<HeaderProps> = ({
           )}
 
           {/* MOBILE MENU TOGGLE BUTTON (VISIBLE AT < 1000px) */}
-          <button 
+          <button
             className="mobile-only"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{ background: 'none', border: 'none', padding: '0.4rem', cursor: 'pointer', color: '#0f172a' }}
@@ -263,16 +273,16 @@ export const Header: React.FC<HeaderProps> = ({
           {/* MOBILE AUTHENTICATION ACTIONS */}
           {isAuthenticated ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <button 
+              <button
                 onClick={() => handleMobileNav('dashboard')}
-                className="btn btn-primary" 
+                className="btn btn-primary"
                 style={{ width: '100%', justifyContent: 'center' }}
               >
                 <LayoutDashboard size={16} /> {getDashboardLabel(currentRole)}
               </button>
-              <button 
+              <button
                 onClick={async () => { await logout(); setMobileMenuOpen(false); onNavigate('home'); }}
-                className="btn" 
+                className="btn"
                 style={{ width: '100%', justifyContent: 'center', border: '1px solid #cbd5e1', color: '#dc2626' }}
               >
                 <LogOut size={16} /> Logout
@@ -280,16 +290,16 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-              <button 
+              <button
                 onClick={() => { onOpenAuth('signin'); setMobileMenuOpen(false); }}
-                className="btn" 
+                className="btn"
                 style={{ justifyContent: 'center', border: '1px solid #cbd5e1' }}
               >
                 <LogIn size={15} /> Sign In
               </button>
-              <button 
+              <button
                 onClick={() => { onOpenAuth('register'); setMobileMenuOpen(false); }}
-                className="btn btn-primary" 
+                className="btn btn-primary"
                 style={{ justifyContent: 'center' }}
               >
                 <UserPlus size={15} /> Create Account
